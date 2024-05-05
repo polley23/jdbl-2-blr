@@ -7,22 +7,21 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
-@Table
+import java.sql.Date;
+
+@Entity(name = "orders")
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
 @Data
-public class User {
+public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(length = 255, nullable = false, unique = true)
-    private String username;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Fine fine;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Order order;
-
-
+    @ManyToOne(fetch = FetchType.EAGER)
+    Book book;
+    @OneToOne
+    User user;
+    @Temporal(value = TemporalType.DATE)
+    Date createdAt;
 }
